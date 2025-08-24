@@ -22,6 +22,12 @@ progress-bar() {
   echo -ne "$s $current/$len ($perc_done%)\r"
 }
 
+process-file() {
+  local file=$1
+
+  sleep .01
+}
+
 shopt -s globstar nullglob
 
 echo 'finding files'
@@ -34,6 +40,7 @@ echo "found $len files"
 
 for file in "${files[@]}"; do
   progress-bar "$((i + 1))" "$len"
+  process-file "$file"
   ((i++))
 done
 
