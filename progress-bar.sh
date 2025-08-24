@@ -24,8 +24,8 @@ progress-bar() {
   echo -ne "$s $current/$len ($perc_done%)\r"
 }
 
-process-file() {
-  local file=$1
+process-files() {
+  local files=("$@")
 
   sleep .01
 }
@@ -33,17 +33,16 @@ process-file() {
 shopt -s globstar nullglob
 
 echo 'finding files'
-
 files=(./**/*cache)
 len=${#files[@]}
-
-i=0
 echo "found $len files"
 
-for file in "${files[@]}"; do
+batchsize=5
+for ((i = 0; i < len; i += batchsize)); do
   progress-bar "$((i + 1))" "$len"
-  process-file "$file"
-  ((i++))
+  process-files "${files[@]:i:batchsize}"
 done
+
+progress-bar "$len" "$len"
 
 echo
