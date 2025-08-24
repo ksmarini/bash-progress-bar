@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+BATCHSIZE=1
+
 progress-bar() {
   local current=$1
   local len=$2
@@ -27,6 +29,8 @@ progress-bar() {
 process-files() {
   local files=("$@")
 
+  # echo rm "${files[@]}"
+
   sleep .01
 }
 
@@ -37,10 +41,9 @@ files=(./**/*cache)
 len=${#files[@]}
 echo "found $len files"
 
-batchsize=5
-for ((i = 0; i < len; i += batchsize)); do
+for ((i = 0; i < len; i += BATCHSIZE)); do
   progress-bar "$((i + 1))" "$len"
-  process-files "${files[@]:i:batchsize}"
+  process-files "${files[@]:i:BATCHSIZE}"
 done
 
 progress-bar "$len" "$len"
