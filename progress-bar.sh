@@ -4,21 +4,22 @@ progress-bar() {
   local current=$1
   local len=$2
 
+  #set limit length of columns terminal
+  local length=50
   local perc_done=$((current * 100 / len))
-
-  echo "processing $current/$len ($perc_done%)"
+  local num_bars=$((perc_done * length / 100))
 
   local i
   local s='['
-  for ((i = 0; i < perc_done; i++)); do
+  for ((i = 0; i < num_bars; i++)); do
     s+='|'
   done
-  for ((i = perc_done; i < 100; i++)); do
+  for ((i = num_bars; i < length; i++)); do
     s+=' '
   done
   s+=']'
 
-  echo "$s"
+  echo "$s $current/$len ($perc_done%)"
 }
 
 shopt -s globstar nullglob
