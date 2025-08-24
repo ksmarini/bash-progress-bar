@@ -19,13 +19,12 @@ progress-bar() {
   done
   s+=']'
 
-  echo "$s $current/$len ($perc_done%)"
+  echo -ne "$s $current/$len ($perc_done%)\r"
 }
 
 shopt -s globstar nullglob
 
 echo 'finding files'
-find . -name '*cache'
 
 files=(./**/*cache)
 len=${#files[@]}
@@ -37,3 +36,5 @@ for file in "${files[@]}"; do
   progress-bar "$((i + 1))" "$len"
   ((i++))
 done
+
+echo
