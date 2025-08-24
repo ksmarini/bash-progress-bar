@@ -4,6 +4,8 @@ progress-bar() {
   local current=$1
   local len=$2
 
+  local bar_char='|'
+  local empty_char=' '
   #set limit length of columns terminal
   local length=50
   local perc_done=$((current * 100 / len))
@@ -12,10 +14,10 @@ progress-bar() {
   local i
   local s='['
   for ((i = 0; i < num_bars; i++)); do
-    s+='|'
+    s+=$'\e[31m'$bar_char$'\e[0m'
   done
   for ((i = num_bars; i < length; i++)); do
-    s+=' '
+    s+=$empty_char
   done
   s+=']'
 
