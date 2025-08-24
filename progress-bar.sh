@@ -1,10 +1,24 @@
 #!/usr/bin/env bash
 
 progress-bar() {
-  local i=$1
+  local current=$1
   local len=$2
 
-  echo "processing $i/$len"
+  local perc_done=$((current * 100 / len))
+
+  echo "processing $current/$len ($perc_done%)"
+
+  local i
+  local s='['
+  for ((i = 0; i < perc_done; i++)); do
+    s+='|'
+  done
+  for ((i = perc_done; i < 100; i++)); do
+    s+=' '
+  done
+  s+=']'
+
+  echo "$s"
 }
 
 shopt -s globstar nullglob
