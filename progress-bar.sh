@@ -14,7 +14,7 @@ progress-bar() {
   local i
   local s='['
   for ((i = 0; i < num_bars; i++)); do
-    s+=$'\e[31m'$bar_char$'\e[0m'
+    s+=$bar_char
   done
   for ((i = num_bars; i < length; i++)); do
     s+=$empty_char
